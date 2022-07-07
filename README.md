@@ -10,6 +10,6 @@
   
  The only input of the function is a folder with the PSM images with the following format:
  
- ![alt text](https://github.com/PHTRU11/image-processing-for-psm/blob/main/image.jpg?raw=true)
+ ![Screenshot](exemple_dossier.PNG)
  
  Example
