@@ -7,9 +7,10 @@ import os
 
 class PSM():
    
-
-    def psm(self,dossier):
-        entries = os.listdir(dossier)
+    #Could be optimised by creating submethods for most parts between comments
+    
+    def psm(self,dossier): 
+        entries = os.listdir(dossier) 
         entries_filtered = []
         for p in entries:
             entries_filtered.append(int(p.replace('.png', '')))
@@ -28,10 +29,10 @@ class PSM():
                 list_images.append(str(k)+'.png')
 
         l = np.size(list_images) 
-        f, axarr = plt.subplots(7,l) 
+        f, axarr = plt.subplots(7,l) # Create the figure
         
 
-        taille = []
+        taille = [] #Init some variables for future use.
         vmin = []
         vmax= []
         j = 0
@@ -39,14 +40,14 @@ class PSM():
         pui = 0
         lp = []
         
-        for s in list_images:
+        for s in list_images: # Find max value for normalisation
             ima = dossier+'/'+s
             immax = cv2.imread(ima, cv2.IMREAD_GRAYSCALE)
             if norm < np.amax(immax):
                 norm = np.amax(immax)
             r = np.amax(immax)
         ta = []
-        for k in list_images:
+        for k in list_images: # First instance with guessed threshold
             ima = dossier+'/'+k
             immax = cv2.imread(ima, cv2.IMREAD_GRAYSCALE)
             r = np.amax(immax)
@@ -62,7 +63,7 @@ class PSM():
             
             immax[immax < 5] = 0
             somme = np.sum(immax**2)
-            for wt in range(20,100,2):
+            for wt in range(20,100,2): # Estimate the cropped image size
                 test = immax[int(y-wt/2):int(y+wt/2)+1, int(x-wt/2):int(x+wt/2)+1]
 
                 taille.append(np.sum(test**2))
@@ -93,7 +94,7 @@ class PSM():
                 
                 
             
-            test = immax[int(y-w/2):int(y+w/2)+1, int(x-w/2):int(x+w/2)+1]
+            test = immax[int(y-w/2):int(y+w/2)+1, int(x-w/2):int(x+w/2)+1] #Base power present in the images for further analysis
             test = test/norm
             if pui < np.sum(test**2):
                 pui = np.sum(test**2)
@@ -114,7 +115,7 @@ class PSM():
         
 
         for i in list_images:
-            for c in range(1, r):
+            for c in range(1, r): # Test for best threshold
                 pic = dossier+'/'+i
                 im = cv2.imread(pic, 0)
                 threshold = c
@@ -152,7 +153,7 @@ class PSM():
                 Foe = (asym - np.fliplr(asym) + np.flipud(asym) - np.fliplr(np.flipud(asym)))/4
 
 
-                if np.sum(raw**2,dtype=np.float64) <  lp[j]/1.25:
+                if np.sum(raw**2,dtype=np.float64) <  lp[j]/1.25: # Verification that most of the power is present in the frame to confirm a good centering
                     abb.append(100)
                 elif (np.sum(Feo**2,dtype=np.float64))+(np.sum(Foe**2,dtype=np.float64)) < 0.2:
                     abb.append(101)
@@ -167,7 +168,7 @@ class PSM():
         cenx = 100
         centery =[]
         centerx =[]
-        for i in list_images:
+        for i in list_images: # Test for a few point around the current centroid
             pic = dossier+'/'+i
             im = cv2.imread(pic, 0)
             threshold = res[j]
@@ -184,7 +185,7 @@ class PSM():
             y=cY
             x=cX
             
-            for q in range(-int(w/5),int(w/5)):
+            for q in range(-int(w/5),int(w/5)): # Find best centroid in y
                 y = y+q
                 raw= im[int(y-w/2):int(y+w/2)+1, int(x-w/2):int(x+w/2)+1]
                 
@@ -214,7 +215,7 @@ class PSM():
                     y = cY
             ceny = 100
             centery.append(resy)
-            for h in range(-int(w/5),int(w/5)):
+            for h in range(-int(w/5),int(w/5)): # Find best centroid in x
                 x = x+h
                 raw= im[int(y-w/2):int(y+w/2)+1, int(x-w/2):int(x+w/2)+1]
                 
@@ -245,7 +246,7 @@ class PSM():
             centerx.append(resx)
         
         
-        for i in list_images:
+        for i in list_images: # Fills the figures
             pic = dossier+'/'+i
             im = cv2.imread(pic, 0)
             
