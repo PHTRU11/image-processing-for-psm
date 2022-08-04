@@ -1,6 +1,6 @@
 # image-processing-for-psm
 
-## Python code the do an aberration analysis with mainly PSM images
+## psm.py is the python code the do an aberration analysis with PSM images
 
 ### Requirements: 
   -open cv,
@@ -18,3 +18,11 @@ the same folder as psm.py a use the following code:
 from psm import PSM
 
 PSM.psm('your_folder_name')
+
+## Other files description
+
+### All images are duplicates of pictures present in the PDFs
+
+### psm.pdf
+
+
