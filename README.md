@@ -25,4 +25,8 @@ PSM.psm('your_folder_name')
 
 ### psm.pdf
 
+Description of the procedure to do the aberration experiment (at the time of the writing the PDFs were not rendering in GitHub, so simply download the PDFs if it is still not working(
 
+### psm_fran_ais_.pdf
+
+Like psm.pdf but in french
